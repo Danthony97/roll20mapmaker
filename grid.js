@@ -5,6 +5,9 @@ gridLoop()
 //angle set here to avoid being reset every update function
 var angle = 0
 
+var path = "media/wall.png"
+var objDepth = -2
+
 function gridLoop() {
 //get desired y and x values
 var grid_y =  document.getElementById("y").value;
@@ -44,12 +47,12 @@ function createGrid(x,y, name) {
 
 function select(div){
     var img = document.createElement("img")
-    img.src = "media/wall.png"
+    img.src = path
     img.id = "outline"
     img.style.position = "absolute"
     img.style.left = div.style.left
     img.style.top = div.style.top
-    img.style.zIndex = -1
+    img.style.zIndex = objDepth
     img.style.transformOrigin = "middle"
     img.style.transform = 'rotate(' + angle + "deg)";
     document.getElementById("images").appendChild(img)
@@ -69,6 +72,31 @@ function clickId(event){
     }
 }
 
+function objUpdate(objId){
+    switch (objId){
+        case 0:
+            path = "media/wall.png"
+            objDepth = -2
+        break;
+        
+        case 1:
+            path = "media/floor.png"
+            objDepth = -3
+        break;
+        
+        case 2:
+            path = "media/door.png"
+            objDepth = -1
+        break;
+
+        case 3:
+            path = "media/oob.png"
+            objDepth = -4
+        break;
+    }
+
+}
+
 function placeObj(){
     var outline = document.getElementById("outline");
     var obj = outline.cloneNode(true)
@@ -83,4 +111,3 @@ function rotate(){
     angle = (angle + 90) % 360; 
     img.style.transform = 'rotate(' + angle + "deg)";
 }
-//<div style="width:78px;height:78px;border:1px solid #000; position: absolute; left: 0; top: 0"></div>
