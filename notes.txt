@@ -1,0 +1,4 @@
+create 0 grid
+2 variables, grid x and grid y. max this out at something or other
+loop over grid y, for every loop generate a new square
+in y loop, loop over grid x, for every x loop generate a new square
