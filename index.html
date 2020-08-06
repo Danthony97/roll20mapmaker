@@ -5,16 +5,20 @@
             x: <input type="number" id="x" value="10">
             y: <input type="number" id="y" value="10">
             <button onclick="gridLoop()">Update grid</button>
+            <button onclick="removeGrid()">Remove grid</button>
             <button onclick="objUpdate(0)">wall</button>
             <button onclick="objUpdate(1)">floor</button>
             <button onclick="objUpdate(2)">door</button>
             <button onclick="objUpdate(3)">oob</button>
+            <button onclick="makeScreenshot()">test</button>
         </div>
         <div id = "grid">
                 <script src="grid.js"></script>
         </div>
         <div id = "images"></div>
+        <script>
+            document.addEventListener('contextmenu', event => event.preventDefault());
+        </script>
     </body>
 
-    </body>
 </html>

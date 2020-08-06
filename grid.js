@@ -14,8 +14,7 @@ var grid_y =  document.getElementById("y").value;
 var grid_x = document.getElementById("x").value;
 
 //clear grid squares on update
-var clear = document.getElementById("grid");
-clear.innerHTML = '';
+removeGrid()
 
 //Loop over Y and create a new grid with its pos
     for (y =1; y < grid_y; y++){
@@ -33,16 +32,22 @@ function createGrid(x,y, name) {
     var div = document.createElement("div");
     div.className = name
     div.id = name
-    div.style.width = "78px";
-    div.style.height = "78px";
+    div.style.width = "69px";
+    div.style.height = "69px";
     div.style.border = "1px solid #000";
     div.style.position = "absolute"
-    div.style.left = (79 * x) + "px"
-    div.style.top = (79 * y) + "px"
-    div.onmousedown = function() {clickId(event)}
+    div.style.left = (69 * x) + "px"
+    div.style.top = (69 * y) + "px"
+    div.style.opacity = 0.25
+    div.onmousedown = function() {clickId(event, name)}
     div.onmouseover = function() {select(div)}
     div.onmouseleave = function() {deselect()}
     return div
+}
+
+function removeGrid(){
+    var clear = document.getElementById("grid");
+    clear.innerHTML = '';
 }
 
 function select(div){
@@ -64,12 +69,23 @@ function deselect(div){
     img.remove()
 }
 
-function clickId(event){
-    if (event.button == 0){
-        rotate();
-    } else if (event.button == 1){
-        placeObj()
+function clickId(event,name){
+    switch (event.button){
+        case 0:
+        placeObj(name)
+        break;
+        
+        case 1:
+            rotate()
+        break;
+
+        case 2:
+            if (document.getElementById("obj" + name)){
+                removeObj(name)
+            }
+        break;
     }
+
 }
 
 function objUpdate(objId){
@@ -97,13 +113,18 @@ function objUpdate(objId){
 
 }
 
-function placeObj(){
+function placeObj(name){
     var outline = document.getElementById("outline");
     var obj = outline.cloneNode(true)
-    obj.id = "obj"
+    obj.id = "obj" + name
 
     document.getElementById("images").appendChild(obj)
 
+}
+
+function removeObj(name){
+    img = document.getElementById("obj" + name);
+    img.remove()
 }
 
 function rotate(){
