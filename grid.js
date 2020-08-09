@@ -1,4 +1,5 @@
 
+
 //run function one on load
 gridLoop()
 
@@ -8,10 +9,14 @@ var angle = 0
 var path = "media/wall.png"
 var objDepth = -2
 
+var mousedown
+
 function gridLoop() {
 //get desired y and x values
 var grid_y =  document.getElementById("y").value;
 var grid_x = document.getElementById("x").value;
+
+
 
 //clear grid squares on update
 removeGrid()
@@ -39,9 +44,11 @@ function createGrid(x,y, name) {
     div.style.left = (69 * x) + "px"
     div.style.top = (69 * y) + "px"
     div.style.opacity = 0.25
-    div.onmousedown = function() {clickId(event, name)}
-    div.onmouseover = function() {select(div)}
+    div.onmousedown = function() {clickId(event, name); mousedown = true}
+    div.onmouseup = function() {mousedown = false}
+    div.onmouseover = function() {select(div,mousedown)}
     div.onmouseleave = function() {deselect()}
+    
     return div
 }
 
@@ -50,7 +57,14 @@ function removeGrid(){
     clear.innerHTML = '';
 }
 
-function select(div){
+
+function removeallobj(){
+    var clear = document.getElementById("images");
+    clear.innerHTML = '';
+}
+
+
+function select(div,mousedown){
     var img = document.createElement("img")
     img.src = path
     img.id = "outline"
@@ -61,6 +75,8 @@ function select(div){
     img.style.transformOrigin = "middle"
     img.style.transform = 'rotate(' + angle + "deg)";
     document.getElementById("images").appendChild(img)
+
+    if (mousedown){ placeObj(div.className) }
 
 }
 
@@ -131,4 +147,13 @@ function rotate(){
     img = document.getElementById("outline")
     angle = (angle + 90) % 360; 
     img.style.transform = 'rotate(' + angle + "deg)";
+}
+
+function screenShot(){
+    html2canvas(document.body).then(function(canvas) {
+        // Export the canvas to its data URI representation
+        document.body.appendChild(canvas);
+        html2canvas.width = 69 * document.getElementById("y").value
+        html2canvas.height = 69 * document.getElementById("x").value
+    });
 }
